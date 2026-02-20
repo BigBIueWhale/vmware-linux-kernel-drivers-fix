@@ -398,6 +398,12 @@ The compiled `.ko` files are at:
 - `vmmon-only/vmmon.ko`
 - `vmnet-only/vmnet.ko`
 
+**Secure Boot note:** These are unsigned out-of-tree kernel modules. If Secure Boot is
+enabled, the kernel will refuse to load them. Check with `mokutil --sb-state`. If Secure
+Boot is on, you must either sign the modules with a Machine Owner Key (MOK) or disable
+Secure Boot in your UEFI/BIOS settings. On this system, Secure Boot is off (disabled for
+the NVIDIA driver), so this is not an issue.
+
 Run these commands to install (requires root):
 
 ```bash
