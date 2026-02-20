@@ -431,7 +431,25 @@ vmnet                  ...  0
 vmmon                  ...  0
 ```
 
-After this, VMware Workstation Pro should start normally.
+After this, you **must** restart the VMware services so the networking daemons
+(`vmnetBridge`, `vmnet-natd`) start and the `/dev/vmnet*` device nodes are created.
+Without this step, VMs will fail to connect to virtual networks with errors like
+*"Could not connect 'Ethernet0' to virtual network '/dev/vmnet8'"*.
+
+```bash
+# Restart VMware services (creates /dev/vmnet0, /dev/vmnet1, /dev/vmnet8, starts NAT/DHCP)
+sudo systemctl restart vmware
+
+# Verify the vmnet devices were created
+ls /dev/vmnet*
+```
+
+Expected output from `ls /dev/vmnet*`:
+```
+/dev/vmnet0  /dev/vmnet1  /dev/vmnet8
+```
+
+After this, VMware Workstation Pro should start normally and VM networking should work.
 
 ## How to Rebuild After a Kernel Update
 
